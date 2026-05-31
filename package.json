@@ -1,6 +1,6 @@
 {
   "name": "agentcmd",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A full-stack web application and TypeScript SDKs for orchestrating AI agent workflows with chat, file editing, and terminal capabilities",
   "private": true,
   "keywords": [
@@ -44,5 +44,10 @@
   "packageManager": "pnpm@10.24.0",
   "engines": {
     "node": ">=20.6.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "node-pty": "1.1.0"
+    }
   }
 }

@@ -527,8 +527,11 @@ export async function startServer(options?: { port?: number; host?: string }) {
   return server;
 }
 
-// Start server when run directly (not imported as module)
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Start server when run directly (not imported as module).
+// Compare resolved filesystem paths (cross-platform): the previous
+// `file://${process.argv[1]}` string never matched import.meta.url on Windows
+// (backslashes + unencoded spaces), so the server never started.
+if (process.argv[1] && __filename.toLowerCase() === process.argv[1].toLowerCase()) {
   // Validate configuration (will throw on startup if invalid)
   const PORT = config.server.port;
   const HOST = config.server.host;

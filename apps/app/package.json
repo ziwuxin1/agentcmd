@@ -1,6 +1,6 @@
 {
   "name": "agentcmd",
-  "version": "1.3.3",
+  "version": "2.0.0",
   "type": "module",
   "main": "dist/server/index.js",
   "bin": {
@@ -26,7 +26,7 @@
     "cli:install": "DATABASE_URL=file:$HOME/.agentcmd/database.db node dist/cli.js install",
     "cli:start": "NODE_ENV=production DATABASE_URL=file:$HOME/.agentcmd/database.db node dist/cli.js start",
     "check-types": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.server.json && tsc --noEmit -p tsconfig.shared.json && tsc --noEmit -p tsconfig.cli.json && tsc --noEmit -p tsconfig.node.json",
-    "dev": "NODE_ENV=development tsx --env-file=.env src/scripts/start-dev.ts",
+    "dev": "cross-env NODE_ENV=development tsx --env-file=.env src/scripts/start-dev.ts",
     "dev:kill": "bash ./scripts/kill-ports.sh",
     "dev:setup": "tsx scripts/setup-env.ts && pnpm prisma:generate && prisma migrate deploy",
     "e2e": "playwright test",
@@ -41,7 +41,7 @@
     "lint": "eslint .",
     "prepublishOnly": "pnpm build",
     "preview": "vite preview",
-    "prisma:generate": "PRISMA_HIDE_UPDATE_MESSAGE=true prisma generate --no-hints",
+    "prisma:generate": "cross-env PRISMA_HIDE_UPDATE_MESSAGE=true prisma generate --no-hints",
     "prisma:migrate": "prisma migrate dev",
     "prisma:reset": "rm -f prisma/dev.db && prisma generate --no-hints && prisma migrate dev",
     "prisma:seed": "tsx prisma/seed.ts",

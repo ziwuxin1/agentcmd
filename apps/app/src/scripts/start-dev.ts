@@ -83,6 +83,7 @@ async function main() {
   const migrateResult = spawnSync("npx", ["prisma", "migrate", "deploy"], {
     stdio: "inherit",
     env: process.env,
+    shell: true, // Windows: resolve npx.cmd (spawn can't exec .cmd without a shell)
   });
 
   if (migrateResult.status !== 0) {
@@ -127,6 +128,7 @@ async function main() {
   console.log(`${COLORS.server}[server]${COLORS.reset} Starting server...`);
   const serverChild = spawn("npx", ["tsx", "watch", "--env-file=.env", "src/server/index.ts"], {
     stdio: "pipe",
+    shell: true, // Windows: resolve npx.cmd (spawn can't exec .cmd without a shell)
     env: {
       ...process.env,
       INNGEST_PORT: INNGEST_PORT.toString(),
@@ -152,6 +154,7 @@ async function main() {
   console.log(`${COLORS.client}[client]${COLORS.reset} Starting client...`);
   const clientChild = spawn("npx", ["vite", "--host"], {
     stdio: "pipe",
+    shell: true, // Windows: resolve npx.cmd (spawn can't exec .cmd without a shell)
     env: process.env,
   });
   children.push(clientChild);

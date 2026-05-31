@@ -50,7 +50,8 @@ export function spawnInngest(options: SpawnInngestOptions): ChildProcess {
   ];
 
   if (dataDir) {
-    args.push("--sqlite-dir", dataDir);
+    // Quote to survive shell:true arg-splitting on paths containing spaces (Windows).
+    args.push("--sqlite-dir", `"${dataDir}"`);
   }
 
   // For debugging:
@@ -59,6 +60,7 @@ export function spawnInngest(options: SpawnInngestOptions): ChildProcess {
   //
   return spawn("npx", args, {
     stdio,
+    shell: true, // Windows: resolve npx.cmd (spawn can't exec .cmd without a shell)
     env: env ?? process.env,
   });
 }
